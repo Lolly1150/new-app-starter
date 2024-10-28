@@ -1,4 +1,5 @@
 import app from './app';
+import auth from './auth';
 import logger from './logger';
 import storage from './storage';
 import localization from './localization';
@@ -9,6 +10,7 @@ import queue from './queue';
 
 export default [
   app,
+  auth,
   cache,
   database,
   localization,
