@@ -18,4 +18,14 @@ export default registerAs('auth', () => ({
    * This value determines the life time of the jwt token.
    */
   ttl: process.env.JWT_TTL || '3h',
+
+  /**
+   * Length of the OTP generated on password reset.
+   */
+  otpLength: 6,
+
+  /**
+   * Expiry of the OTP in seconds
+   */
+  otpExpiry: 600,
 }));

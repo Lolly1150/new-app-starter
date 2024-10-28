@@ -1,13 +1,19 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Transformable,
   Validate,
 } from '@intentjs/core';
 import { AuthService } from 'app/services/auth';
 import { UserTransformer } from 'app/transformers/user';
-import { RegisterDto } from 'app/validators/auth';
+import {
+  LoginDto,
+  RegisterDto,
+  RequestPasswordChangeOtpDto,
+  VerifyEmailDto,
+} from 'app/validators/auth';
 
 @Controller('auth')
 export class AuthController extends Transformable {
@@ -21,5 +27,27 @@ export class AuthController extends Transformable {
     console.log(dto);
     const user = await this.auth.register(dto);
     return this.item(user, new UserTransformer());
+  }
+
+  @Post('login')
+  @Validate(LoginDto)
+  async login(@Body() dto: LoginDto) {
+    const user = await this.auth.login(dto);
+    return this.item(user, new UserTransformer());
+  }
+
+  @Get('verify-email')
+  async verifyEmail(@Body() dto: VerifyEmailDto) {
+    await this.auth.verifyEmail(dto);
+  }
+
+  @Post('forgot-password')
+  @Validate(RequestPasswordChangeOtpDto)
+  async forgotPassword(@Body() dto: RequestPasswordChangeOtpDto) {
+    await this.auth.requestPasswordChangeOtp(dto);
+    return {
+      success: true,
+      message: 'OTP sent to registered email!',
+    };
   }
 }

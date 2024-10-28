@@ -28,3 +28,39 @@ export class RegisterDto extends LoginDto {
   @MinLength(6)
   password: string;
 }
+
+export class VerifyEmailDto {
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+}
+
+export class RequestPasswordChangeOtpDto {
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+}
+
+export class VerifyOtpForChangePasswordDto {
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  otp: string;
+}
+
+export class ChangePasswordUsingTokenDto {
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
