@@ -1,8 +1,4 @@
-import {
-  IntentApplication,
-  IntentApplicationContext,
-  ServiceProvider,
-} from '@intentjs/core';
+import { IntentApplicationContext, ServiceProvider } from '@intentjs/core';
 import { GreetingCommand } from 'app/console/greeting';
 
 export class ConsoleServiceProvider extends ServiceProvider {
@@ -16,5 +12,5 @@ export class ConsoleServiceProvider extends ServiceProvider {
   /**
    * Bootstrap any application service here.
    */
-  boot(app: IntentApplication | IntentApplicationContext) {}
+  boot(app: IntentApplicationContext) {}
 }

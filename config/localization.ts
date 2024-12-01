@@ -1,6 +1,6 @@
-import { LocalizationOptions, registerAs } from '@intentjs/core';
+import { LocalizationOptions, configNamespace } from '@intentjs/core';
 
-export default registerAs(
+export default configNamespace(
   'localization',
   (): LocalizationOptions => ({
     /**

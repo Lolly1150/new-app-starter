@@ -1,7 +1,5 @@
 import {
   CorsMiddleware,
-  HelmetMiddleware,
-  IntentApplication,
   IntentGuard,
   IntentMiddleware,
   Kernel,
@@ -9,6 +7,8 @@ import {
   Type,
 } from '@intentjs/core';
 import { UserController } from './controllers/app';
+import { AuthController } from './controllers/auth';
+import { Server } from '@intentjs/hyper-express';
 
 export class HttpKernel extends Kernel {
   /**
@@ -16,7 +16,7 @@ export class HttpKernel extends Kernel {
    * Read more - https://tryintent.com/docs/controllers
    */
   public controllers(): Type<any>[] {
-    return [UserController];
+    return [UserController, AuthController];
   }
 
   /**
@@ -27,7 +27,7 @@ export class HttpKernel extends Kernel {
    * Read more - https://tryintent.com/docs/middlewares
    */
   public middlewares(): Type<IntentMiddleware>[] {
-    return [CorsMiddleware, HelmetMiddleware];
+    return [CorsMiddleware];
   }
 
   /**
@@ -55,7 +55,5 @@ export class HttpKernel extends Kernel {
   /**
    * @param app
    */
-  public async boot(app: IntentApplication): Promise<void> {
-    app.disable('x-powered-by');
-  }
+  public async boot(app: Server): Promise<void> {}
 }

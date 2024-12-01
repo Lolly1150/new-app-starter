@@ -1,10 +1,7 @@
-import {
-  IntentApplication,
-  IntentApplicationContext,
-  ServiceProvider,
-} from '@intentjs/core';
+import { IntentApplicationContext, ServiceProvider } from '@intentjs/core';
 import { UserDbRepository } from 'app/repositories/userDbRepository';
 import { UserService } from 'app/services';
+import { AuthService } from 'app/services/auth';
 
 export class AppServiceProvider extends ServiceProvider {
   /**
@@ -18,6 +15,7 @@ export class AppServiceProvider extends ServiceProvider {
      */
     this.bind(UserService);
 
+    this.bind(AuthService);
     /**
      * Binding the UserDbRepository with a non-class based token 'USER_DB_REPO'.
      *
@@ -29,5 +27,5 @@ export class AppServiceProvider extends ServiceProvider {
   /**
    * Bootstrap any application service here.
    */
-  boot(app: IntentApplication | IntentApplicationContext) {}
+  boot(app: IntentApplicationContext) {}
 }
