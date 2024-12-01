@@ -1,6 +1,6 @@
-import { registerAs } from '@intentjs/core';
+import { configNamespace } from '@intentjs/core';
 
-export default registerAs('auth', () => ({
+export default configNamespace('auth', () => ({
   /**
    * -----------------------------------------------------
    * JWT SECRET

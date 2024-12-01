@@ -1,6 +1,6 @@
-import { registerAs, StorageOptions } from '@intentjs/core';
+import { configNamespace, StorageOptions } from '@intentjs/core';
 
-export default registerAs(
+export default configNamespace(
   'filesystem',
   (): StorageOptions =>
     ({

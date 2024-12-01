@@ -1,7 +1,7 @@
-import { DatabaseOptions, registerAs } from '@intentjs/core';
+import { DatabaseOptions, configNamespace } from '@intentjs/core';
 import { knexSnakeCaseMappers } from 'objection';
 
-export default registerAs(
+export default configNamespace(
   'db',
   (): DatabaseOptions => ({
     isGlobal: true,

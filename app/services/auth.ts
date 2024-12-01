@@ -3,7 +3,7 @@ import {
   GenericException,
   Inject,
   Injectable,
-  IntentConfig,
+  ConfigService,
   Mail,
   MailMessage,
   Unauthorized,
@@ -27,7 +27,7 @@ import { ulid } from 'ulid';
 @Injectable()
 export class AuthService {
   constructor(
-    private config: IntentConfig,
+    private config: ConfigService,
     @Inject('USER_DB_REPO') private users: UserDbRepository,
   ) {}
 
@@ -54,7 +54,7 @@ export class AuthService {
 
     user.token = await this.makeToken({
       sub: user.id,
-      env: IntentConfig.get('app.env'),
+      env: this.config.get('app.env'),
       emailVerifiedAt: user.emailVerifiedAt,
       passwordChangedAt: user.passwordChangedAt,
     });
@@ -71,7 +71,7 @@ export class AuthService {
 
     user.token = await this.makeToken({
       sub: user.id,
-      env: IntentConfig.get('app.env'),
+      env: this.config.get('app.env'),
       emailVerifiedAt: user.emailVerifiedAt,
       passwordChangedAt: user.passwordChangedAt,
     });
@@ -104,7 +104,7 @@ export class AuthService {
       });
     }
 
-    const otp = generateOtp(IntentConfig.get('auth.otpLength'));
+    const otp = generateOtp(this.config.get<string>('auth.otpLength'));
 
     /**
      * Save the OTP in cache.
@@ -114,7 +114,11 @@ export class AuthService {
       userEmail: dto.email,
     });
 
-    await Cache.store().set(cacheKey, otp, IntentConfig.get('auth.otpExpiry'));
+    await Cache.store().set(
+      cacheKey,
+      otp,
+      this.config.get<string>('auth.otpExpiry'),
+    );
 
     const mail = MailMessage.init()
       .greeting('Hey there')
@@ -148,8 +152,8 @@ export class AuthService {
     }
 
     const payload = { email: dto.email, purpose: 'CHANGE_PASSWORD' };
-    const token = sign(payload, IntentConfig.get('auth.secret'), {
-      issuer: IntentConfig.get('app.url'),
+    const token = sign(payload, this.config.get<string>('auth.secret'), {
+      issuer: this.config.get<string>('app.url'),
       expiresIn: '15m',
     });
 
@@ -169,17 +173,19 @@ export class AuthService {
   }
 
   async verifyToken(token: string): Promise<Record<string, any>> {
-    const payload = (await verify(token, IntentConfig.get('auth.secret'), {
-      issuer: IntentConfig.get('app.url'),
-    })) as JwtPayload;
+    const payload = (await verify(
+      token,
+      this.config.get('auth.secret') as string,
+      { issuer: this.config.get('app.url') as string },
+    )) as JwtPayload;
 
     return payload;
   }
 
   async makeToken(payload: Record<string, any>): Promise<string> {
-    return sign(payload, IntentConfig.get('auth.secret'), {
-      issuer: IntentConfig.get('app.url'),
-      expiresIn: IntentConfig.get('auth.ttl'),
+    return sign(payload, this.config.get('auth.secret') as string, {
+      issuer: this.config.get('app.url') as string,
+      expiresIn: this.config.get('auth.ttl') as string,
     });
   }
 }
