@@ -16,7 +16,7 @@
   "scripts": {
     "build": "intent build",
     "start": "intent start",
-    "dev": "./node_modules/.bin/intent start --watch",
+    "dev": "intent start --watch",
     "format": "prettier --write \"app/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{app,libs,test}/**/*.ts\" --fix",
     "test": "jest",
