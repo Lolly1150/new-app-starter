@@ -14,10 +14,10 @@
   },
   "homepage": "https://github.com/intentjs/new-app-starter",
   "scripts": {
-    "build": "./node_modules/.bin/intent build",
+    "build": "intent build",
+    "start": "intent start",
+    "dev": "./node_modules/.bin/intent start --watch",
     "format": "prettier --write \"app/**/*.ts\" \"test/**/*.ts\"",
-    "start": "./node_modules/.bin/intent start",
-    "start:dev": "./node_modules/.bin/intent start --watch",
     "lint": "eslint \"{app,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -40,7 +40,7 @@
     "winston": "^3.14.2"
   },
   "devDependencies": {
-    "@intentjs/cli": "^0.0.3",
+    "@intentjs/cli": "^0.0.6",
     "@nestjs/testing": "^10.0.0",
     "@swc/cli": "^0.4.1-nightly.20240914",
     "@swc/core": "^1.7.26",
